@@ -4,6 +4,15 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "string": "cpp",
-        "span": "cpp"
+        "span": "cpp",
+        "complex": "cpp",
+        "chrono": "cpp",
+        "algorithm": "cpp",
+        "unordered_map": "cpp",
+        "*.tcc": "cpp",
+        "unordered_set": "cpp",
+        "string_view": "cpp",
+        "ranges": "cpp",
+        "tuple": "cpp"
     }
 }

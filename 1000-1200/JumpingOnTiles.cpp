@@ -13,8 +13,6 @@
 #define uset unordered_set
 #define MOD 1000000007
 
-
-
 #include <bits/stdc++.h>
 #include <stdio.h>
 #include <string>
@@ -27,25 +25,27 @@
 
 using namespace std;
 
-struct node {
-    int val;
-    node* next;
-    node* prev;
-};
-
-struct VectorHasher {
-    int operator()(const vector<int> &V) const {
-        int hash = V.size();
-        for(auto &i : V) {
-            hash ^= i + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+void solve(string s){
+    vector<pair<char,int>> v;
+    int c;
+    int m;
+    for(int i=1;i<sz(s)-1;++i){
+        if((s[0]<=s[sz(s)-1] && s[i]>=s[0] && s[sz(s)-1]>=s[i]) || (s[0]>=s[sz(s)-1] && s[i]<=s[0] && s[sz(s)-1]<=s[i])){
+            v.pb(mk(s[i],i));
         }
-        return hash;
     }
-};
-
-
-void solve(int s){
-    cout << s << endl;
+    sort(v.begin(),v.end());
+    if(s[0]>s[sz(s)-1]){
+        reverse(v.begin(),v.end());
+    }
+    cout << abs(int(s[0])-int(s[sz(s)-1])) << " " << sz(v)+2 << endl;
+    cout << 1 << " ";
+    
+    for(int i=0;i<sz(v);++i){
+        cout << v[i].second+1 << " ";
+    }
+    cout << sz(s) << endl;
+    return;
 }
 
 
@@ -66,13 +66,9 @@ int main(void) {
     cin >> t;
 
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+        string s;
+        cin >> s; // number of elements in vector
+        solve(s);
     }
 
     return 0;

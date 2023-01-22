@@ -44,8 +44,36 @@ struct VectorHasher {
 };
 
 
-void solve(int s){
-    cout << s << endl;
+void solve(stack<int> st){
+    string ans = "";
+    ll p = 0;
+    while(sz(st) > 0){
+        
+        if (sz(st) == 0) break;
+        int val = st.top()+p;
+        st.pop();
+        if(val==1){
+            ans += "1";
+            continue;
+        }
+
+        while(val > 1){
+            if(val%2==0){
+                ans += "+";
+                ans += "d";
+                p += 1;
+                val = val/2;
+            }else{
+                ans += "+";
+                ans += "1";
+                p += 1;
+                val -= 1;
+            }
+        }
+        ans += "11";
+    }
+    reverse(ans.begin(),ans.end());
+    cout << ans << endl;
 }
 
 
@@ -56,7 +84,6 @@ int main(void) {
 
     /* number of test cases, remember to check bounds*/
     unsigned int t;
-    unsigned int n;
 
     #ifndef ONLINE_JUDGE
         freopen("../input.txt", "r", stdin);
@@ -64,16 +91,13 @@ int main(void) {
     #endif
 
     cin >> t;
-
+    stack<int> st;
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+        int s;
+        cin >> s;
+        st.push(s);
     }
+    solve(st);
 
     return 0;
 }

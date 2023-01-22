@@ -27,12 +27,6 @@
 
 using namespace std;
 
-struct node {
-    int val;
-    node* next;
-    node* prev;
-};
-
 struct VectorHasher {
     int operator()(const vector<int> &V) const {
         int hash = V.size();
@@ -43,9 +37,48 @@ struct VectorHasher {
     }
 };
 
+int dp(int i, int d, vi nums, umap<vi,int, VectorHasher>& memo){
+    
+    if(i==sz(nums)){
+        return 0;
+    }
+    
+    if(memo.find(vi{i,d}) != memo.end()){
+        return memo[vi{i,d}];
+    }
+    int m = d*nums[i];
+    for(int j=i+1;j<=sz(nums);++j){
+        m = max(m, d*nums[i]+dp(j,-d,nums,memo));
+    }
+    // cout << i << " " << d << " " << m << endl;
+    memo[vi{i,d}] = m;
+    // if(memo.find(vi{i,d}) != memo.end()){
+    //     cout << "memo" << endl;
+    // }
+    return m;
+}
 
-void solve(int s){
-    cout << s << endl;
+void solve(vi nums){
+    ll ans = 0;
+    umap<vi,int, VectorHasher> memo;
+    // for(int i=0;i<sz(nums);++i){
+    //     ans = max(ans, dp(i,1,nums,memo));
+    // }
+    
+    for(int i=0;i<sz(nums);++i){
+        if(i==0 && nums[i+1]<=nums[i]){
+            ans += nums[i];
+        }else if(i > 0 && i<sz(nums)-1 && nums[i-1] >= nums[i] && nums[i+1] > nums[i]){
+            ans -= nums[i];
+        }else if(i > 0 && i<sz(nums)-1 && nums[i-1] < nums[i] && nums[i+1] <= nums[i]){
+            ans += nums[i];
+        }else if(i > 0 && i == sz(nums)-1 && nums[i-1] < nums[i]){
+            ans += nums[i];
+        }
+    }
+
+    cout << ans << endl;
+    return;
 }
 
 
@@ -57,6 +90,7 @@ int main(void) {
     /* number of test cases, remember to check bounds*/
     unsigned int t;
     unsigned int n;
+    unsigned int q;
 
     #ifndef ONLINE_JUDGE
         freopen("../input.txt", "r", stdin);
@@ -67,12 +101,14 @@ int main(void) {
 
     for(int i=0; i < t; ++i) { //loops for each case
         cin >> n; // number of elements in vector
+        cin >> q;
         vi nums;
         for (int j=0; j < n; ++j) { // each element of vector
             int s;
             cin >> s;
             nums.pb(s);
         }
+        solve(nums);
     }
 
     return 0;
