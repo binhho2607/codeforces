@@ -8,7 +8,7 @@
 #define a first
 #define b second
 #define vi vector<int>
-#define over(x) (x).begin(), (x).end()
+// #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
@@ -55,8 +55,6 @@ void solve(int s){
 }
 
 
-
-
 int main(void) {
 
     ios_base::sync_with_stdio(false);
@@ -64,7 +62,6 @@ int main(void) {
 
     /* number of test cases, remember to check bounds*/
     unsigned int t;
-    unsigned int n;
 
     #ifndef ONLINE_JUDGE
         freopen("../input.txt", "r", stdin);
@@ -72,14 +69,22 @@ int main(void) {
     #endif
 
     cin >> t;
-
+    // vector<vi> nums;
+    int prev;
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
+        int s;
+        cin >> s;
+        int n;
+        cin >> n;
+        prev = n;
+        bool f = false;
+        for(int j=1;j<s;++j){
+            cin >> n;
+            if(n-prev != 1 && f == false){
+                cout << j+1 << endl;
+                f = true;
+            }
+            prev = n;
         }
     }
 

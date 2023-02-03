@@ -8,7 +8,7 @@
 #define a first
 #define b second
 #define vi vector<int>
-#define over(x) (x).begin(), (x).end()
+// #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
@@ -50,11 +50,23 @@ struct PairHasher{
 };
 
 
-void solve(int s){
-    cout << s << endl;
+void solve(string s){
+    umap<char, string> m;
+    vector<string> v{"@","8","(","|)","3","#","6","[-]","|","_|","|<","1","[]\\/[]","[]\\[]","0","|D","(,)","|Z","$","']['","|_|","\\/","\\/\\/","}{","`/","2"};
+    string ans;
+    for(int i=0;i<sz(v);++i){
+        m[char('a'+i)] = v[i];
+    }
+    for(auto c:s){
+        c = tolower(c);
+        if(m.find(c) != m.end()){
+            ans += m[c];
+        }else{
+            ans += c;
+        }
+    }
+    cout << ans << endl;
 }
-
-
 
 
 int main(void) {
@@ -71,17 +83,9 @@ int main(void) {
         freopen("../output.txt", "w", stdout);
     #endif
 
-    cin >> t;
-
-    for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
-    }
+    string s;
+    getline(cin, s);
+    solve(s);
 
     return 0;
 }

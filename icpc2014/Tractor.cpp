@@ -50,10 +50,20 @@ struct PairHasher{
 };
 
 
-void solve(int s){
-    cout << s << endl;
-}
+// void solve(int s){
+//     cout << s << endl;
+// }
 
+void recursion(int a, int b, pii cur, int exp, ll& ans){
+    if(cur.a+pow(2,exp-1) <= a){
+        ++ans;
+        recursion(a, b, mk(cur.a+pow(2,exp-1),cur.b), exp+1, ans);
+    }
+    if(cur.a+pow(2,exp-1) <= a){
+        ++ans;
+        recursion(a, b, mk(cur.a+pow(2,exp-1),cur.b), exp+1, ans);
+    }
+}
 
 
 
@@ -74,13 +84,30 @@ int main(void) {
     cin >> t;
 
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
+        int a, b;
+        cin >> a >> b;
+        ll ans = 0;
+        int j=0;
+        // recursion(a, b, {0,0}, 1,ans);
+        while(j<30){
+            if(pow(2,j)-1 > max(a,b)){
+                // cout << i << endl;
+                break;
+            } 
+            if(pow(2,j)-1 <= min(a,b)){
+                
+                ans += pow(2,j);
+                // cout << ans << endl;
+            }else{
+                ans += min(a,b)+1;
+            }
+            ++j;
         }
+        // cout << min(a,b)-(pow(2,j)-1-max(a,b))+1 << endl;
+        if(min(a,b)-(pow(2,j)-1-max(a,b))+1 > 0){
+            ans += min(a,b)-(pow(2,j)-1-max(a,b))+1;
+        }
+        cout << ans << endl;
     }
 
     return 0;

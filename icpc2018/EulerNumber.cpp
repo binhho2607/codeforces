@@ -8,7 +8,7 @@
 #define a first
 #define b second
 #define vi vector<int>
-#define over(x) (x).begin(), (x).end()
+// #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
@@ -49,12 +49,22 @@ struct PairHasher{
   }
 };
 
+// ll factorial(ll n){
+//     if(n==1 || n == 0){
+//         return 1;
+//     }
+//     return n*factorial(n-1);
+// }
 
-void solve(int s){
-    cout << s << endl;
+void solve(int t){
+    long double ans = 1;
+    long double f = 1;
+    for(int i=1;i<=t;++i){
+        f *= i;
+        ans += (long double)(1/(f));
+    }
+    cout << fixed << setprecision(15) << ans << endl;
 }
-
-
 
 
 int main(void) {
@@ -73,15 +83,7 @@ int main(void) {
 
     cin >> t;
 
-    for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
-    }
+    solve(t);
 
     return 0;
 }

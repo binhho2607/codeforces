@@ -71,16 +71,13 @@ int main(void) {
         freopen("../output.txt", "w", stdout);
     #endif
 
-    cin >> t;
+    int p, q, s;
+    cin >> p >> q >> s;
 
-    for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+    if(lcm(p, q) <= s){
+        cout << "yes" << endl;
+    }else{
+        cout << "no" << endl;
     }
 
     return 0;

@@ -72,14 +72,12 @@ int main(void) {
     #endif
 
     cin >> t;
-
+    cin.ignore();
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
+        string s;
+        getline(cin, s);
+        if(s.find("Simon says ") != string::npos){
+            cout << s.substr(s.find("Simon says ")+10, sz(s)-10) << endl;
         }
     }
 

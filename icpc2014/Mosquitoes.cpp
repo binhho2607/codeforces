@@ -12,6 +12,7 @@
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
+#define ldb long double
 
 
 
@@ -50,8 +51,37 @@ struct PairHasher{
 };
 
 
-void solve(int s){
-    cout << s << endl;
+void solve(vector<pair<ldb,ldb>> v, ldb d){
+    int left = 0;
+    int right = 0;
+    int ans = 0;
+    sort(v.begin(), v.end());
+    for(auto n:v){
+        cout << " (" << n.a << "," << n.b << ") ";
+    }
+    cout << endl;
+    while(right<sz(v)-1){
+        while(left < right && v[right].a-v[left].a > d){
+            ++left;
+        }
+        pair<ldb, ldb> avg{0,0};
+        for(int i=left;i<=right;++i){
+            avg.a += v[i].a;
+            avg.b += v[i].b;
+        }
+        avg.a /= (right-left+1);
+        avg.b /= (right-left+1);
+        int c = 0;
+        for(int i=left;i<=right;++i){
+            if(sqrt(pow(avg.a-v[i].a,2) + pow(avg.b-v[i].b,2)) <= d/2){
+                ++c;
+            }
+        }
+        cout << left << " " << right << " " << c << endl;
+        ans = max(ans, c);
+        ++right;
+    }
+    cout << ans << endl;
 }
 
 
@@ -64,7 +94,6 @@ int main(void) {
 
     /* number of test cases, remember to check bounds*/
     unsigned int t;
-    unsigned int n;
 
     #ifndef ONLINE_JUDGE
         freopen("../input.txt", "r", stdin);
@@ -72,15 +101,19 @@ int main(void) {
     #endif
 
     cin >> t;
-
+    cin.ignore();
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
+        vector<pair<ldb, ldb>> v;
+        int n;
+        ldb d;
+        cin >> n >> d;
+        for(int j=0;j<n;++j){
+            ldb s1, s2;
+            cin >> s1 >> s2;
+            v.pb(mk(s1, s2));
         }
+        solve(v, d);
+        cin.ignore();
     }
 
     return 0;

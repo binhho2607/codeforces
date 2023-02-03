@@ -8,7 +8,7 @@
 #define a first
 #define b second
 #define vi vector<int>
-#define over(x) (x).begin(), (x).end()
+// #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
@@ -43,18 +43,42 @@ struct VectorHasher {
     }
 };
 
-struct PairHasher{
-  size_t operator()(const pii &x) const{
-    return x.first ^ x.second;
-  }
-};
 
-
-void solve(int s){
-    cout << s << endl;
+void solve(int n, int s, int m, vi nums){
+    uset<int> p;
+    
+    --s;
+    p.insert(s);
+    if(nums[s] == m){
+        cout << "magic" << endl;
+        cout << 0 << endl;
+        return;
+    }
+    int h = 0;
+    while(true){
+        ++h;
+        s = nums[s]+s;
+        if(s < 0){
+            cout << "left" << endl;
+            break;
+        }
+        if(s >= n){
+            cout << "right" << endl;
+            break;
+        }
+        if(nums[s] == m){
+            cout << "magic" << endl;
+            break;
+        }
+        if(p.find(s) != p.end()){
+            cout << "cycle" << endl;
+            break;
+        }
+        p.insert(s);
+    }
+    cout << h << endl;
+    return;
 }
-
-
 
 
 int main(void) {
@@ -63,25 +87,27 @@ int main(void) {
     cin.tie(NULL);
 
     /* number of test cases, remember to check bounds*/
-    unsigned int t;
     unsigned int n;
+    unsigned int s;
+    unsigned int m;
+    
 
     #ifndef ONLINE_JUDGE
         freopen("../input.txt", "r", stdin);
         freopen("../output.txt", "w", stdout);
     #endif
 
-    cin >> t;
+    cin >> n;
+    cin >> s;
+    cin >> m;
 
-    for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+    vi nums;
+    for(int i=0;i<n;++i){
+        int k;
+        cin >> k;
+        nums.pb(k);
     }
+    solve(n,s,m,nums);
 
     return 0;
 }

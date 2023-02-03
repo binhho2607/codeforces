@@ -8,7 +8,7 @@
 #define a first
 #define b second
 #define vi vector<int>
-#define over(x) (x).begin(), (x).end()
+// #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
@@ -55,33 +55,56 @@ void solve(int s){
 }
 
 
-
-
 int main(void) {
 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
     /* number of test cases, remember to check bounds*/
-    unsigned int t;
-    unsigned int n;
+    unsigned int w;
+    unsigned int s;
+    unsigned int c;
+    unsigned int k;
 
     #ifndef ONLINE_JUDGE
         freopen("../input.txt", "r", stdin);
         freopen("../output.txt", "w", stdout);
     #endif
 
-    cin >> t;
-
-    for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+    cin >> w;
+    cin >> s;
+    cin >> c;
+    cin >> k;
+    if(k==0){
+        cout << "NO" << endl;
+    }else
+    if(w == 0 && (s <= k || c <= k)){
+        cout << "YES" << endl;
+    }else if(s == 0){
+        cout << "YES" << endl;
+    }else if(c == 0 && (w <= k || s <= k)){
+        cout << "YES" << endl;
     }
+    else if(s < k || (s==k && w+c-k<=k) || (s>k && w+c<k) || (s<=2*k && w+c<=k)){
+        cout << "YES" << endl;
+    }
+    else if((c+s<=k && c+w <= k) || (w+s<=k && w+c <= k) || (s+w<=k && s+c <= k)){
+        cout << "YES" << endl;
+    }
+    
+    else{
+        cout << "NO" << endl;
+    }
+
+    // for(int i=0; i < t; ++i) { //loops for each case
+    //     cin >> n; // number of elements in vector
+    //     vi nums;
+    //     for (int j=0; j < n; ++j) { // each element of vector
+    //         int s;
+    //         cin >> s;
+    //         nums.pb(s);
+    //     }
+    // }
 
     return 0;
 }

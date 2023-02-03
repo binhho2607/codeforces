@@ -50,8 +50,22 @@ struct PairHasher{
 };
 
 
-void solve(int s){
-    cout << s << endl;
+void solve(vi nums){
+    uset<int> u;
+    int m = 0;
+    for(int i=0;i<sz(nums);++i){
+        for(int j=0;j<i;++j){
+            u.insert(nums[i]-nums[j]);
+            m = max(m, nums[i]-nums[j]);
+        }
+    }
+    for(int i=1;i<=m;++i){
+        if(u.find(i) != u.end()){
+            cout << i << " ";
+        }
+    }
+    cout << endl;
+
 }
 
 
@@ -71,17 +85,17 @@ int main(void) {
         freopen("../output.txt", "w", stdout);
     #endif
 
-    cin >> t;
+    cin >> t >> n;
 
+    vi nums{0};
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+        int s;
+        cin >> s;
+        nums.pb(s);
     }
+    nums.pb(t);
+
+    solve(nums);
 
     return 0;
 }

@@ -8,7 +8,7 @@
 #define a first
 #define b second
 #define vi vector<int>
-#define over(x) (x).begin(), (x).end()
+// #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
@@ -50,11 +50,21 @@ struct PairHasher{
 };
 
 
-void solve(int s){
-    cout << s << endl;
+void solve(vector<pair<ll,ll>> v){
+    ll ans = 0;
+    sort(v.begin(), v.end());
+    for(int i=0;i<sz(v);++i){
+        for(int j=i+1;j<sz(v);++j){
+            if(v[i].a+2018 < v[j].a){
+                break;
+            }
+            if(sqrt(pow(v[i].a-v[j].a, 2) + pow(v[i].b-v[j].b, 2)) == 2018) {
+                ans += 1;
+            }
+        }
+    }
+    cout << ans << endl;
 }
-
-
 
 
 int main(void) {
@@ -72,16 +82,15 @@ int main(void) {
     #endif
 
     cin >> t;
+    vector<pair<ll,ll>> v;
 
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+        ll s1, s2;
+        cin >> s1;
+        cin >> s2;
+        v.pb(mk(s1, s2));
     }
 
+    solve(v);
     return 0;
 }

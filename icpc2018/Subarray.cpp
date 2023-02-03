@@ -8,7 +8,7 @@
 #define a first
 #define b second
 #define vi vector<int>
-#define over(x) (x).begin(), (x).end()
+// #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
@@ -24,6 +24,7 @@
 #include <queue>
 #include <unordered_set>
 #include <unordered_map>
+#include <climits>
 
 using namespace std;
 
@@ -45,14 +46,48 @@ struct VectorHasher {
 
 struct PairHasher{
   size_t operator()(const pii &x) const{
-    return x.first ^ x.second;
+    int hash = 2;
+    hash ^= x.first + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+    hash ^= x.second + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+    return  hash;
   }
 };
 
 
-void solve(int s){
-    cout << s << endl;
+ll dp(int k, vector<ll> nums, int i, umap<pii, ll, PairHasher>& memo){
+    if(i==sz(nums ) && k>0){
+        return LLONG_MIN;
+    }
+    if(k > sz(nums)-i){
+        return LLONG_MIN;
+    }
+    if(k==0){
+        return 0;
+    }
+    if(memo.find(mk(i,k)) != memo.end()){
+        return memo[mk(i,k)];
+    }
+    
+    ll m = LLONG_MIN;
+    ll cur = 0;
+    for(int s=i;s<sz(nums);++s){
+        cur += nums[s];
+        ll res = dp(k-1, nums, s+1, memo);
+        if(res != LLONG_MIN){
+            m = max(m, cur+res);
+        }
+        res = dp(k, nums, s+1, memo);
+        if(res != LLONG_MIN){
+            m = max(m, res);
+        }
+
+    }
+    memo[mk(i,k)] = m;
+    return m;
+    
 }
+
+
 
 
 
@@ -63,25 +98,25 @@ int main(void) {
     cin.tie(NULL);
 
     /* number of test cases, remember to check bounds*/
-    unsigned int t;
     unsigned int n;
+    unsigned int k;
 
     #ifndef ONLINE_JUDGE
         freopen("../input.txt", "r", stdin);
         freopen("../output.txt", "w", stdout);
     #endif
 
-    cin >> t;
-
-    for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+    cin >> n;
+    cin >> k;
+    vector<ll> nums;
+    for(int i=0; i < n; ++i) { //loops for each case
+        ll s;
+        cin >> s;
+        nums.pb(s);
     }
+    umap<pii, ll, PairHasher> memo;
+    cout << dp(k, nums, 0, memo) << endl;
+    // solve(k, nums);
 
     return 0;
 }

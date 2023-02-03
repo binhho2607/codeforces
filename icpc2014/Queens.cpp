@@ -71,17 +71,46 @@ int main(void) {
         freopen("../output.txt", "w", stdout);
     #endif
 
-    cin >> t;
 
-    for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
+    vector<string> v(8, "........");
+    uset<int> r, c;
+    int count = 0;
+    for(int i=0; i < 8; ++i) { //loops for each case
+        string s;
+        cin >> s;
+        v[i] = s;
+        for(int j=0;j<8;++j){
+            if(s[j] == '.') continue;
+            ++count;
+            // if(r.find(i) != r.end()){
+            //     cout << s << endl;
+            //     cout << "invalid" << endl;
+            //     return 0;
+            // }
+            // if(c.find(j) != c.end()){
+            //     cout << "invalid" << endl;
+            //     return 0;
+            // }
+            // r.insert(i);
+            // c.insert(j);
+            vector<pii> dirs{mk(1,1),mk(-1,-1),mk(-1,1), mk(1,-1), mk(1,0), mk(0,1), mk(-1,0), mk(0,-1)};
+            for(auto d:dirs){
+                for(int k=1;k<=8;++k){
+                    if(i+k*d.a >= 0 && i+k*d.a < 8 && j+k*d.b >= 0 && j+k*d.b < 8 && v[i+k*d.a][j+k*d.b] == '*'){
+                        cout << "invalid" << endl;
+                        return 0;
+                    }
+                }
+                
+            }
         }
     }
+    if(count == 8){
+        cout << "valid" << endl;
+    }else{
+        cout << "invalid" << endl;
+    }
+    
 
     return 0;
 }

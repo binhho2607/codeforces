@@ -8,7 +8,7 @@
 #define a first
 #define b second
 #define vi vector<int>
-#define over(x) (x).begin(), (x).end()
+// #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
@@ -49,12 +49,29 @@ struct PairHasher{
   }
 };
 
+// long double cosh(long double x){
+//     return (exp(x)+exp(-x))/2;
+// }
 
-void solve(int s){
-    cout << s << endl;
+
+void solve(int d, int s){
+    long double left = 0;
+    long double right = imax;
+    int iter = 0;
+    long double mid;
+    while(left < right && iter < 100){
+        mid = left+(right-left)/2;
+        if(mid + s - mid*cosh(d/(2*mid)) == 0){
+            break;
+        }else if(mid + s - mid*cosh(d/(2*mid)) < 0){
+            left = mid;
+        }else{
+            right = mid;
+        }
+        iter += 1;
+    }
+    cout << fixed << setprecision(9) << 2*mid*sinh(d/(2*mid)) << endl;
 }
-
-
 
 
 int main(void) {
@@ -63,25 +80,18 @@ int main(void) {
     cin.tie(NULL);
 
     /* number of test cases, remember to check bounds*/
-    unsigned int t;
-    unsigned int n;
+    unsigned int d;
+    unsigned int s;
 
     #ifndef ONLINE_JUDGE
         freopen("../input.txt", "r", stdin);
         freopen("../output.txt", "w", stdout);
     #endif
 
-    cin >> t;
+    cin >> d;
+    cin >> s;
 
-    for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
-    }
+    solve(d, s);
 
     return 0;
 }

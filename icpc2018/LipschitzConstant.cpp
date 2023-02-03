@@ -8,7 +8,7 @@
 #define a first
 #define b second
 #define vi vector<int>
-#define over(x) (x).begin(), (x).end()
+// #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
@@ -24,6 +24,7 @@
 #include <queue>
 #include <unordered_set>
 #include <unordered_map>
+#include <float.h>
 
 using namespace std;
 
@@ -50,11 +51,39 @@ struct PairHasher{
 };
 
 
-void solve(int s){
-    cout << s << endl;
+void solve(vector<pair<double,double>> nums){
+    double l = 0;
+    sort(nums.begin(), nums.end());
+    for(int i=1;i<sz(nums);++i){
+        double r = nums[i].b-nums[i-1].b;
+        double q = nums[i].a-nums[i-1].a;
+        if(r < 0) r = -r;
+        if(q < 0) q = -q;
+        l = max((double)r/q, l);
+    
+    }
+    // sort(x.begin(), x.end());
+    // sort(f.begin(), f.end());
+    // long double maxf = DBL_MIN;
+    // int jf = -1;
+    // int jx1 = -1;
+    // int jx2 = -1;
+    // long double minx = DBL_MAX;
+    // for(int i=1;i<sz(x);++i){
+    //     if(x[i].a-x[i-1].a<minx){
+    //         minx = x[i].a-x[i-1].a;
+    //         jx1 = x[i].b;
+    //         jx2 = x[i-1].b;
+    //     }
+    // }
+    // cout << f[sz(f)-1].a << endl;
+    // long double l = max(abs(f[0].a-f[sz(f)-1].a)/abs(nums[f[0].b].a-nums[f[sz(f)-1].b].a), abs(nums[jx1].b-nums[jx2].b)/(minx));
+
+
+
+
+    cout << fixed << setprecision(10) << l << endl;
 }
-
-
 
 
 int main(void) {
@@ -64,7 +93,6 @@ int main(void) {
 
     /* number of test cases, remember to check bounds*/
     unsigned int t;
-    unsigned int n;
 
     #ifndef ONLINE_JUDGE
         freopen("../input.txt", "r", stdin);
@@ -73,15 +101,16 @@ int main(void) {
 
     cin >> t;
 
+    vector<pair<double, double>> nums;
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+        double s;
+        double n;
+        cin >> s;
+        cin >> n;
+        nums.pb(mk(s, n));
+
     }
 
+    solve(nums);
     return 0;
 }

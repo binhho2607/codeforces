@@ -8,7 +8,7 @@
 #define a first
 #define b second
 #define vi vector<int>
-#define over(x) (x).begin(), (x).end()
+// #define all(x) (x).begin(), (x).end()
 #define umap unordered_map
 #define uset unordered_set
 #define MOD 1000000007
@@ -50,11 +50,50 @@ struct PairHasher{
 };
 
 
-void solve(int s){
-    cout << s << endl;
+void solve(vi h, vi b){
+    vi dp1, dp2;
+    dp1.resize(pow(10,5)+1, imax);
+    dp2.resize(pow(10,5)+1, imax);
+    dp1[0] = 0;
+    dp2[0] = 0;
+    for(auto p:h){
+        vi ndp1 = dp1;
+
+        for(int i=1;i<sz(dp1);++i){
+            if(i-p >= 0 && dp1[i-p] != imax){
+                ndp1[i] = min(dp1[i], dp1[i-p]+1);
+            }
+        }
+        dp1 = ndp1;
+    }
+    for(auto p:b){
+        vi ndp2 = dp2;
+        // ndp2.resize(pow(10,5)+1, imax);
+        // ndp2[0] = 0;
+        for(int i=1;i<sz(dp2);++i){
+            if(i-p >= 0 && dp2[i-p] != imax){
+                ndp2[i] = min(dp2[i], dp2[i-p]+1);
+            }
+        }
+        dp2 = ndp2;
+    }
+
+    int ans = imax;
+
+    for(int i=1;i<sz(dp1);++i){
+        if(dp1[i] != imax && dp2[i] != imax){
+            ans = min(ans, dp1[i]+dp2[i]);
+        }
+    }
+
+    if(ans == imax){
+        cout << "impossible" << endl;
+    }else{
+        cout << ans << endl;
+    }
+
+    return;
 }
-
-
 
 
 int main(void) {
@@ -73,15 +112,23 @@ int main(void) {
 
     cin >> t;
 
+    vi h;
+    vi b;
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+        int s;
+        cin >> s;
+        h.pb(s);
     }
+
+    cin >> t;
+
+    for(int i=0; i < t; ++i) { //loops for each case
+        int s;
+        cin >> s;
+        b.pb(s);
+    }
+
+    solve(h, b);
 
     return 0;
 }

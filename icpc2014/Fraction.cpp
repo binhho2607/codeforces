@@ -50,8 +50,10 @@ struct PairHasher{
 };
 
 
-void solve(int s){
-    cout << s << endl;
+void solve(int n1, int n2){
+    int x = n1/n2;
+    int y = n1%n2;
+    cout << x << " " << y << " / " << n2 << endl;
 }
 
 
@@ -71,16 +73,16 @@ int main(void) {
         freopen("../output.txt", "w", stdout);
     #endif
 
-    cin >> t;
 
-    for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+    while(true){
+        string s;
+        getline(cin, s);
+        int sp = s.find(' ');
+        // cout << s.substr(0,sp) << endl;
+        int n1 = stoi(s.substr(0,sp));
+        int n2 = stoi(s.substr(sp+1, sz(s)-sp));
+        if(n1 == 0 && n2 == 0) break;
+        solve(n1, n2);
     }
 
     return 0;

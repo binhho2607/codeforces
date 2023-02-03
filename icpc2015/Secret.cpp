@@ -50,8 +50,59 @@ struct PairHasher{
 };
 
 
-void solve(int s){
-    cout << s << endl;
+void solve(string s){
+    int l = sz(s);
+    int m;
+    for(int i=0;i<sqrt(l)+1;++i){
+        if(i*i >= l){
+            m = i;
+            break;
+        }
+    }
+
+    // cout << m << endl;
+
+    vector<vector<char>> v(m, vector<char>(m, '*'));
+    int p = 0;
+    for(int i=0;i<m;++i){
+        for(int j=0;j<m;++j){
+            v[i][j] = s[p];
+            ++p;
+            if(p==sz(s)){
+                break;
+            }
+        }
+        if(p==sz(s)){
+            break;
+        }
+    }
+
+    // for(int i=0;i<m;++i){
+    //     for(int j=0;j<m;++j){
+    //         cout << v[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    for(int i=0;i<m;++i){
+        for(int j=i+1;j<m;++j){
+            swap(v[i][j], v[j][i]);
+        }
+    }
+
+    for(int i=0;i<m;++i){
+        reverse(v[i].begin(), v[i].end());
+    }
+    string ans = "";
+    for(int i=0;i<m;++i){
+        for(int j=0;j<m;++j){
+            if(v[i][j] != '*'){
+                ans += v[i][j];
+            }
+        }
+    }
+    cout << ans << endl;
+
 }
 
 
@@ -74,13 +125,9 @@ int main(void) {
     cin >> t;
 
     for(int i=0; i < t; ++i) { //loops for each case
-        cin >> n; // number of elements in vector
-        vi nums;
-        for (int j=0; j < n; ++j) { // each element of vector
-            int s;
-            cin >> s;
-            nums.pb(s);
-        }
+        string s;
+        cin >> s;
+        solve(s);
     }
 
     return 0;
