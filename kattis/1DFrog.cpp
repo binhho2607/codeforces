@@ -24,6 +24,7 @@
 #include <queue>
 #include <unordered_set>
 #include <unordered_map>
+#include <numeric>
 
 using namespace std;
 
@@ -97,17 +98,17 @@ int main(void) {
         freopen("../output.txt", "w", stdout);
     #endif
 
+
     cin >> n;
     cin >> s;
-    cin >> m;
-
-    vi nums;
-    for(int i=0;i<n;++i){
-        int k;
-        cin >> k;
-        nums.pb(k);
-    }
-    solve(n,s,m,nums);
-
+//    cin >> m;
+    cout << __gcd(n,s);
+//    vi nums;
+//    for(int i=0;i<n;++i){
+//        int k;
+//        cin >> k;
+//        nums.pb(k);
+//    }
+//    solve(n,s,m,nums);
     return 0;
 }
